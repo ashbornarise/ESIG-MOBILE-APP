@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a365d">
+    <title>ESIG Global Success - App Mobile</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2563eb;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --border: #d1d5db;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--light);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+
+        /* HEADER MOBILE */
+        .mobile-header {
+            background: linear-gradient(135deg, var(--primary), #2c5282);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .mobile-header .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-header .logo {
+            font-size: 2em;
+        }
+
+        .mobile-header .title {
+            text-align: center;
+        }
+
+        .mobile-header h1 {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .mobile-header p {
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+
+        /* NAVIGATION BOTTOM */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+        }
+
+        .nav-item.active {
+            color: var(--secondary);
+        }
+
+        .nav-item .icon {
+            font-size: 1.5em;
+            margin-bottom: 3px;
+        }
+
+        .nav-item .label {
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 15px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* CARDS */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--secondary), #1d4ed8);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 0.8em;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            font-size: 0.75em;
+            opacity: 0.8;
+        }
+
+        .stat-card.success {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .stat-card.warning {
+            background: linear-gradient(135deg, var(--accent), #d97706);
+        }
+
+        /* MACHINE LIST */
+        .machine-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .machine-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .machine-item .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .machine-item h3 {
+            color: var(--primary);
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .machine-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .machine-status.available {
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .machine-status.busy {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .machine-status.maintenance {
+            background: var(--danger);
+            box-shadow: 0 0 8px var(--danger);
+        }
+
+        .machine-item .details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .machine-item .details span {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .badge.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge.danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* FORMS */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        /* BUTTONS */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #1d4ed8);
+            color: white;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: var(--dark);
+        }
+
+        /* CHECKBOX LIST */
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: var(--secondary);
+        }
+
+        .checkbox-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .checkbox-item.checked {
+            background: #dbeafe;
+            border: 2px solid var(--secondary);
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid var(--accent);
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid var(--success);
+        }
+
+        /* MEMBER LIST */
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .member-item {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-info strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .member-info small {
+            color: #6b7280;
+            font-size: 0.85em;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--danger);
+            color: white;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px;
+            border: none;
+            background: white;
+            color: #6b7280;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85em;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* LOADING */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* FLOATING ACTION BUTTON */
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), #1d4ed8);
+            color: white;
+            border: none;
+            font-size: 1.8em;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 998;
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        /* SEARCH */
+        .search-box {
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 0.95em;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        /* ACCORDION */
+        .accordion-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 15px;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 1000px;
+        }
+
+        .accordion-body {
+            padding: 15px;
+        }
+
+        /* PROGRESS BAR */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #059669);
+            transition: width 0.5s;
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .content {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+
+        /* PULL TO REFRESH */
+        .ptr-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            transform: translateY(-100%);
+            transition: transform 0.3s;
+            z-index: 999;
+        }
+
+        .ptr-container.active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="mobile-header">
+        <div class="logo-container">
+            <div class="logo">🏆</div>
+            <div class="title">
+                <h1>ESIG Global Success</h1>
+                <p>Gestion Atelier Mobile</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- PULL TO REFRESH -->
+    <div class="ptr-container" id="ptrContainer">
+        🔄 Actualisation...
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+        <!-- HOME SCREEN -->
+        <div class="screen active" id="homeScreen">
+            <div class="stats-grid">
+                <div class="stat-card success">
+                    <h3>TRS Moyen</h3>
+                    <div class="value">94%</div>
+                    <div class="label">Objectif: >90%</div>
+                </div>
+                <div class="stat-card success">
+                    <h3>Utilisation</h3>
+                    <div class="value">87%</div>
+                    <div class="label">Novembre</div>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Budget</h3>
+                    <div class="value">350k</div>
+                    <div class="label">FCFA/mois</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Machines</h3>
+                    <div class="value">7</div>
+                    <div class="label">Actives</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🔧 Machines Principales</h2>
+                <div class="machine-list" id="machineList"></div>
+            </div>
+
+            <div class="card">
+                <h2>⚠️ Alertes Stock</h2>
+                <div class="alert alert-warning">
+                    <strong>5 articles</strong> nécessitent une commande urgente
+                </div>
+                <button class="btn btn-primary" onclick="showScreen('stockScreen')">
+                    📦 Voir les stocks
+                </button>
+            </div>
+        </div>
+
+        <!-- FORMULAIRE TP SCREEN -->
+        <div class="screen" id="tpScreen">
+            <div class="card">
+                <h2>📋 Nouveau TP</h2>
+
+                <form id="tpForm" onsubmit="handleTPSubmit(event)">
+                    <div class="form-group">
+                        <label>Date du TP *</label>
+                        <input type="date" id="dateTP" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Machine *</label>
+                        <select id="machineTP" required>
+                            <option value="">Sélectionner</option>
+                            <option value="FRAIS-380-001">Fraiseuse Universelle</option>
+                            <option value="TOUR-380-001">Tour Parallèle</option>
+                            <option value="CNC-LASER-001">CNC Laser CO2</option>
+                            <option value="CNC-FRAIS-001">CNC Fraiseuse 3 axes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Titre du TP *</label>
+                        <input type="text" id="titreTP" placeholder="Ex: Usinage pièce cylindrique" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Responsable *</label>
+                        <input type="text" id="responsableTP" placeholder="Nom complet" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" id="telTP" placeholder="+228 XX XX XX XX" required>
+                    </div>
+
+                    <h3 style="margin: 20px 0 10px 0; color: var(--primary); font-size: 1.1em;">👥 Membres de l'équipe</h3>
+
+                    <div class="form-group">
+                        <input type="text" id="nomMembre" placeholder="Nom du membre">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="matriculeMembre" placeholder="Matricule">
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addMember()">
+                        ➕ Ajouter membre
+                    </button>
+
+                    <div class="member-list" id="memberList" style="margin-top: 15px;"></div>
+
+                    <h3 style="margin: 20px 0 10px 0; color: var(--primary); font-size: 1.1em;">🦺 EPI Obligatoires</h3>
+
+                    <div class="checkbox-list">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="chaussures" id="epi1">
+                            <label for="epi1">👷 Chaussures de sécurité S3</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="lunettes" id="epi2">
+                            <label for="epi2">👓 Lunettes de protection</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="blouse" id="epi3">
+                            <label for="epi3">👔 Blouse de travail</label>
+                        </div>
+                    </div>
+
+                    <h3 style="margin: 20px 0 10px 0; color: var(--primary); font-size: 1.1em;">🔧 Outils Principaux</h3>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>Outils de mesure</span>
+                            <span>▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="outil" value="pied-coulisse">
+                                        <label>📏 Pied à coulisse</label>
+                                    </div>
+                                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="outil" value="micrometre">
+                                        <label>📏 Micromètre</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>Outils de coupe</span>
+                            <span>▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="checkbox-list">
+                                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="outil" value="forets">
+                                        <label>🔩 Forets HSS</label>
+                                    </div>
+                                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="outil" value="fraises">
+                                        <label>⚙️ Fraises</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin: 20px 0 10px 0; color: var(--primary); font-size: 1.1em;">✅ Validation</h3>
+
+                    <div class="checkbox-list">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" required>
+                            <label>✓ Machine disponible</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" required>
+                            <label>✓ EPI disponibles</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" required>
+                            <label>✓ Consignes de sécurité connues</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" style="margin-top: 20px;">
+                        ✓ Valider le TP
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- STOCK SCREEN -->
+        <div class="screen" id="stockScreen">
+            <div class="search-box">
+                <input type="text" placeholder="🔍 Rechercher une pièce..." id="searchStock">
+            </div>
+
+            <div class="card">
+                <h2>📦 Pièces de Rechange</h2>
+                <div id="stockList"></div>
+            </div>
+        </div>
+
+        <!-- MAINTENANCE SCREEN -->
+        <div class="screen" id="maintenanceScreen">
+            <div class="tabs">
+                <button class="tab active" onclick="filterMaintenance('all')">Toutes</button>
+                <button class="tab" onclick="filterMaintenance('quotidienne')">Quotidienne</button>
+                <button class="tab" onclick="filterMaintenance('hebdo')">Hebdo</button>
+                <button class="tab" onclick="filterMaintenance('mensuelle')">Mensuelle</button>
+            </div>
+
+            <div class="card">
+                <h2>🛠️ Maintenance Préventive</h2>
+                <div id="maintenanceList"></div>
+            </div>
+
+            <div class="card">
+                <h2>📅 Historique</h2>
+                <div class="alert alert-success">
+                    <strong>15/11/2025</strong> - Fraiseuse FRAIS-380-001<br>
+                    <small>Maintenance mensuelle effectuée</small>
+                </div>
+                <div class="alert alert-warning">
+                    <strong>12/11/2025</strong> - CNC Laser<br>
+                    <small>Nettoyage optiques prévu</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE SCREEN -->
+        <div class="screen" id="profileScreen">
+            <div class="card">
+                <h2>👤 Profil</h2>
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" value="Agent ESIG" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="agent@esig-globalsuccess.tg" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Fonction</label>
+                    <input type="text" value="Technicien Atelier" readonly>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚙️ Paramètres</h2>
+                <button class="btn btn-secondary">🔔 Notifications</button>
+                <button class="btn btn-secondary">🌙 Mode sombre</button>
+                <button class="btn btn-secondary">📱 Installer l'application</button>
+                <button class="btn btn-primary">🔄 Synchroniser</button>
+            </div>
+
+            <div class="card">
+                <h2>ℹ️ À propos</h2>
+                <p style="color: #6b7280; line-height: 1.6;">
+                    <strong>ESIG Global Success</strong><br>
+                    Version 1.0.0<br>
+                    École Supérieure d'Ingénierie et de Gestion<br>
+                    <br>
+                    📞 +228 XX XX XX XX<br>
+                    📧 atelier@esig-globalsuccess.tg
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="showScreen('homeScreen')">
+            <div class="icon">🏠</div>
+            <div class="label">Accueil</div>
+        </button>
+        <button class="nav-item" onclick="showScreen('tpScreen')">
+            <div class="icon">📋</div>
+            <div class="label">Nouveau TP</div>
+        </button>
+        <button class="nav-item" onclick="showScreen('stockScreen')">
+            <div class="icon">📦</div>
+            <div class="label">Stock</div>
+        </button>
+        <button class="nav-item" onclick="showScreen('maintenanceScreen')">
+            <div class="icon">🛠️</div>
+            <div class="label">Maintenance</div>
+        </button>
+        <button class="nav-item" onclick="showScreen('profileScreen')">
+            <div class="icon">👤</div>
+            <div class="label">Profil</div>
+        </button>
+    </div>
+
+    <!-- FAB -->
+    <button class="fab" onclick="showScreen('tpScreen')" id="fab">
+        ➕
+    </button>
+
+    <script>
+        // DONNÉES
+        const machines = [
+            { nom: 'Fraiseuse Universelle', ref: 'FRAIS-380-001', puissance: '4.30 kW', statut: 'available' },
+            { nom: 'Tour Parallèle', ref: 'TOUR-380-001', puissance: '1.10 kW', statut: 'busy' },
+            { nom: 'CNC Laser CO2', ref: 'CNC-LASER-001', puissance: '3.10 kW', statut: 'available' },
+            { nom: 'CNC Fraiseuse 3 axes', ref: 'CNC-FRAIS-001', puissance: '2.80 kW', statut: 'available' },
+            { nom: 'Perceuse Colonne', ref: 'USIN-380-001', puissance: '2.50 kW', statut: 'maintenance' }
+        ];
+
+        const stockItems = [
+            { nom: 'Courroie trapézoïdale B-1500', min: 2, actuel: 1, urgent: true },
+            { nom: 'Huile de coupe (25L)', min: 2, actuel: 1, urgent: true },
+            { nom: 'Fusibles NH 16A', min: 5, actuel: 3, urgent: false },
+            { nom: 'Buse laser rechange', min: 1, actuel: 0, urgent: true },
+            { nom: 'Gants anti-coupure', min: 20, actuel: 12, urgent: false }
+        ];
+
+        const maintenanceTasks = [
+            { type: 'quotidienne', desc: 'Nettoyage et niveaux', responsable: 'Opérateurs' },
+            { type: 'hebdo', desc: 'Vérification courroies', responsable: 'Technicien' },
+            { type: 'mensuelle', desc: 'Contrôle précision', responsable: 'Maintenance' }
+        ];
+
+        let members = [];
+
+        // INIT
+        window.onload = function() {
+            fillMachineList();
+            fillStockList();
+            fillMaintenanceList();
+
+            // Set date par défaut
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateTP').value = today;
+
+            // Install PWA
+            registerServiceWorker();
+        };
+
+        // NAVIGATION
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(screenId).classList.add('active');
+
+            const navItems = document.querySelectorAll('.nav-item');
+            const screens = ['homeScreen', 'tpScreen', 'stockScreen', 'maintenanceScreen', 'profileScreen'];
+            const index = screens.indexOf(screenId);
+            if (index !== -1) {
+                navItems[index].classList.add('active');
+            }
+
+            // Hide/show FAB
+            document.getElementById('fab').style.display = screenId === 'homeScreen' ? 'flex' : 'none';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // FILL LISTS
+        function fillMachineList() {
+            const list = document.getElementById('machineList');
+            list.innerHTML = machines.map(m => {
+                const statusText = { available: 'Disponible', busy: 'En cours', maintenance: 'Maintenance' };
+                return `
+                    <div class="machine-item">
+                        <div class="header">
+                            <h3><span class="machine-status ${m.statut}"></span> ${m.nom}</h3>
+                            <span class="badge ${m.statut === 'available' ? 'success' : m.statut === 'busy' ? 'warning' : 'danger'}">
+                                ${statusText[m.statut]}
+                            </span>
+                        </div>
+                        <div class="details">
+                            <span><strong>Ref:</strong> ${m.ref}</span>
+                            <span><strong>Puissance:</strong> ${m.puissance}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function fillStockList() {
+            const list = document.getElementById('stockList');
+            list.innerHTML = stockItems.map(item => `
+                <div class="machine-item" style="border-left-color: ${item.urgent ? 'var(--danger)' : 'var(--accent)'}">
+                    <div class="header">
+                        <h3 style="font-size: 1em;">${item.nom}</h3>
+                        <span class="badge ${item.urgent ? 'danger' : 'warning'}">
+                            ${item.urgent ? 'URGENT' : 'À commander'}
+                        </span>
+                    </div>
+                    <div class="details">
+                        <span><strong>Stock min:</strong> ${item.min}</span>
+                        <span><strong>Stock actuel:</strong> ${item.actuel}</span>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 10px;" onclick="orderPart('${item.nom}')">
+                        📦 Commander
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function fillMaintenanceList() {
+            const list = document.getElementById('maintenanceList');
+            list.innerHTML = maintenanceTasks.map(task => `
+                <div class="machine-item">
+                    <div class="header">
+                        <h3 style="font-size: 1em;">${task.desc}</h3>
+                        <span class="badge info">${task.type}</span>
+                    </div>
+                    <div class="details">
+                        <span><strong>Responsable:</strong> ${task.responsable}</span>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 10px;">
+                        📋 Planifier
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // MEMBERS
+        function addMember() {
+            const nom = document.getElementById('nomMembre').value.trim();
+            const matricule = document.getElementById('matriculeMembre').value.trim();
+
+            if (!nom) {
+                alert('⚠️ Veuillez entrer le nom du membre');
+                return;
+            }
+
+            members.push({ id: Date.now(), nom, matricule: matricule || 'N/A' });
+            updateMemberList();
+
+            document.getElementById('nomMembre').value = '';
+            document.getElementById('matriculeMembre').value = '';
+        }
+
+        function updateMemberList() {
+            const list = document.getElementById('memberList');
+            list.innerHTML = members.map(m => `
+                <div class="member-item">
+                    <div class="member-info">
+                        <strong>${m.nom}</strong>
+                        <small>Matricule: ${m.matricule}</small>
+                    </div>
+                    <button class="btn-icon" onclick="removeMember(${m.id})">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function removeMember(id) {
+            members = members.filter(m => m.id !== id);
+            updateMemberList();
+        }
+
+        // CHECKBOXES
+        function toggleCheckbox(item) {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            item.classList.toggle('checked', checkbox.checked);
+        }
+
+        // ACCORDION
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+            header.querySelector('span:last-child').textContent =
+                content.classList.contains('active') ? '▲' : '▼';
+        }
+
+        // FORMS
+        function handleTPSubmit(event) {
+            event.preventDefault();
+
+            if (members.length === 0) {
+                alert('⚠️ Ajoutez au moins un membre');
+                return;
+            }
+
+            const epiChecked = document.querySelectorAll('input[name="epi"]:checked').length;
+            if (epiChecked === 0) {
+                alert('⚠️ Sélectionnez au moins un EPI');
+                return;
+            }
+
+            showLoading();
+
+            setTimeout(() => {
+                hideLoading();
+                alert('✓ TP enregistré avec succès!\n\nNuméro: TP-' + Date.now().toString().slice(-8));
+                document.getElementById('tpForm').reset();
+                members = [];
+                updateMemberList();
+                showScreen('homeScreen');
+            }, 1500);
+        }
+
+        function orderPart(part) {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                alert('📦 Commande initiée pour:\n' + part);
+            }, 1000);
+        }
+
+        function filterMaintenance(type) {
+            document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const filtered = type === 'all' ? maintenanceTasks :
+                            maintenanceTasks.filter(t => t.type === type);
+
+            // Update list with filtered tasks
+            fillMaintenanceList();
+        }
+
+        // LOADING
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        // SEARCH
+        document.getElementById('searchStock')?.addEventListener('input', function(e) {
+            const search = e.target.value.toLowerCase();
+            document.querySelectorAll('#stockList .machine-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(search) ? 'block' : 'none';
+            });
+        });
+
+        // SERVICE WORKER
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').then(reg => {
+                    console.log('Service Worker enregistré', reg);
+                }).catch(err => {
+                    console.log('Erreur SW:', err);
+                });
+            }
+        }
+
+        // PULL TO REFRESH
+        let startY = 0;
+        let pulling = false;
+
+        document.addEventListener('touchstart', e => {
+            if (window.scrollY === 0) {
+                startY = e.touches[0].pageY;
+                pulling = true;
+            }
+        });
+
+        document.addEventListener('touchmove', e => {
+            if (!pulling) return;
+            const y = e.touches[0].pageY;
+            const pull = y - startY;
+            if (pull > 80) {
+                document.getElementById('ptrContainer').classList.add('active');
+            }
+        });
+
+        document.addEventListener('touchend', e => {
+            if (pulling && document.getElementById('ptrContainer').classList.contains('active')) {
+                location.reload();
+            }
+            pulling = false;
+            document.getElementById('ptrContainer').classList.remove('active');
+        });
+    </script>
+</body>
+</html>

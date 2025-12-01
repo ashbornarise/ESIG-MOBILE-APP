@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESIG Global Success - Formulaire TP Atelier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2563eb;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --border: #d1d5db;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #2c5282);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .form-section h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.05em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            background: #e5e7eb;
+            transform: translateX(5px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: var(--secondary);
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0;
+            flex: 1;
+        }
+
+        .checkbox-item.checked {
+            background: #dbeafe;
+            border-color: var(--secondary);
+        }
+
+        .member-list {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .member-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .member-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-info strong {
+            color: var(--primary);
+            font-size: 1.1em;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #1d4ed8);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, var(--secondary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #059669, var(--success));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626, var(--danger));
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .alert {
+            padding: 18px 24px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05em;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 5px solid var(--success);
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 5px solid var(--accent);
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--border);
+        }
+
+        .summary-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .summary-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-item strong {
+            color: var(--dark);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            background: var(--secondary);
+            color: white;
+        }
+
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .btn, .alert-info {
+                display: none;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .form-section {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 2em;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .member-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        .required {
+            color: var(--danger);
+            margin-left: 4px;
+        }
+
+        .icon {
+            font-size: 1.3em;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            margin: 40px 0;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🏆 ESIG</div>
+            <div class="logo-subtitle">GLOBAL SUCCESS</div>
+            <h1>Formulaire de Préparation TP Atelier</h1>
+            <p>Système de Gestion et Traçabilité des Travaux Pratiques</p>
+        </header>
+
+        <div class="content">
+            <div class="alert alert-info">
+                <span class="icon">ℹ️</span>
+                <div>
+                    <strong>Instructions:</strong> Remplissez tous les champs obligatoires avant de commencer votre TP.
+                    Ce formulaire assure la traçabilité et la sécurité de tous les travaux pratiques.
+                </div>
+            </div>
+
+            <form id="tpForm" onsubmit="handleSubmit(event)">
+                <!-- INFORMATIONS GÉNÉRALES -->
+                <div class="form-section">
+                    <h2><span class="icon">📋</span> Informations Générales</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Date du TP <span class="required">*</span></label>
+                            <input type="date" id="dateTP" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Heure de début <span class="required">*</span></label>
+                            <input type="time" id="heureDebut" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Durée estimée <span class="required">*</span></label>
+                            <select id="duree" required>
+                                <option value="">Sélectionner</option>
+                                <option value="1h">1 heure</option>
+                                <option value="2h">2 heures</option>
+                                <option value="3h">3 heures</option>
+                                <option value="4h">4 heures</option>
+                                <option value="journee">Journée complète</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Machine/Équipement principal <span class="required">*</span></label>
+                            <select id="machine" required>
+                                <option value="">Sélectionner une machine</option>
+                                <option value="FRAIS-380-001">Fraiseuse Universelle</option>
+                                <option value="TOUR-380-001">Tour Parallèle</option>
+                                <option value="CNC-LASER-001">CNC Laser CO2</option>
+                                <option value="CNC-FRAIS-001">CNC Fraiseuse 3 axes</option>
+                                <option value="SOUD-380-001">Soudure MIG/MAG</option>
+                                <option value="COMP-380-001">Compresseur</option>
+                                <option value="USIN-380-001">Perceuse Colonne</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Titre/Objectif du TP <span class="required">*</span></label>
+                        <input type="text" id="titreTP" placeholder="Ex: Usinage d'une pièce cylindrique" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description détaillée du travail</label>
+                        <textarea id="description" rows="4" placeholder="Décrivez les opérations qui seront effectuées..."></textarea>
+                    </div>
+                </div>
+
+                <!-- RESPONSABLE ATELIER -->
+                <div class="form-section">
+                    <h2><span class="icon">👨‍🏫</span> Responsable de l'Atelier</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nom du responsable <span class="required">*</span></label>
+                            <input type="text" id="nomResponsable" placeholder="Nom complet" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro de téléphone <span class="required">*</span></label>
+                            <input type="tel" id="telResponsable" placeholder="+228 XX XX XX XX" pattern="[\+]?[0-9]{8,}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="emailResponsable" placeholder="responsable@esig.tg">
+                        </div>
+                        <div class="form-group">
+                            <label>Fonction</label>
+                            <select id="fonctionResponsable">
+                                <option value="">Sélectionner</option>
+                                <option value="enseignant">Enseignant</option>
+                                <option value="chef-atelier">Chef d'Atelier</option>
+                                <option value="technicien">Technicien</option>
+                                <option value="superviseur">Superviseur</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEMBRES DE L'ÉQUIPE -->
+                <div class="form-section">
+                    <h2><span class="icon">👥</span> Membres de l'Équipe</h2>
+                    <div class="alert alert-info">
+                        <span class="icon">💡</span>
+                        Ajoutez tous les étudiants/participants qui travailleront sur ce TP
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nom complet du membre</label>
+                            <input type="text" id="nomMembre" placeholder="Nom et prénom">
+                        </div>
+                        <div class="form-group">
+                            <label>Matricule/Numéro étudiant</label>
+                            <input type="text" id="matriculeMembre" placeholder="Ex: ESG2025001">
+                        </div>
+                        <div class="form-group">
+                            <label>Classe/Niveau</label>
+                            <select id="classeMembre">
+                                <option value="">Sélectionner</option>
+                                <option value="L1">Licence 1</option>
+                                <option value="L2">Licence 2</option>
+                                <option value="L3">Licence 3</option>
+                                <option value="M1">Master 1</option>
+                                <option value="M2">Master 2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Rôle dans le TP</label>
+                            <select id="roleMembre">
+                                <option value="">Sélectionner</option>
+                                <option value="operateur-principal">Opérateur principal</option>
+                                <option value="assistant">Assistant</option>
+                                <option value="observateur">Observateur</option>
+                                <option value="mesures">Responsable mesures</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addMember()">
+                        <span class="icon">➕</span> Ajouter ce membre
+                    </button>
+
+                    <div class="member-list" id="memberList">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">Liste des membres (0)</h3>
+                        <p id="noMembers" style="text-align: center; color: #6b7280; padding: 20px;">
+                            Aucun membre ajouté pour le moment
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ÉQUIPEMENTS DE SÉCURITÉ (EPI) -->
+                <div class="form-section">
+                    <h2><span class="icon">🦺</span> Équipements de Protection Individuelle (EPI)</h2>
+                    <div class="alert alert-warning">
+                        <span class="icon">⚠️</span>
+                        <strong>Obligatoire:</strong> Sélectionnez tous les EPI qui seront utilisés pendant ce TP
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">EPI Obligatoires</h3>
+                    <div class="checkbox-grid" id="epiObligatoires">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="chaussures-securite" id="epi1">
+                            <label for="epi1">👷 Chaussures de sécurité S3</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="lunettes-protection" id="epi2">
+                            <label for="epi2">👓 Lunettes de protection</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="blouse" id="epi3">
+                            <label for="epi3">👔 Blouse/Vêtements de travail</label>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">EPI Selon Activité</h3>
+                    <div class="checkbox-grid" id="epiOptionnels">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="gants-anticoupure" id="epi4">
+                            <label for="epi4">🧤 Gants anti-coupure</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="masque-soudure" id="epi5">
+                            <label for="epi5">😷 Masque de soudure</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="protection-auditive" id="epi6">
+                            <label for="epi6">👂 Protection auditive (>85dB)</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="masque-respiratoire" id="epi7">
+                            <label for="epi7">😷 Masque respiratoire</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="tablier-protection" id="epi8">
+                            <label for="epi8">🦺 Tablier de protection</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="gants-thermiques" id="epi9">
+                            <label for="epi9">🧤 Gants thermiques</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="casque" id="epi10">
+                            <label for="epi10">⛑️ Casque de sécurité</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="epi" value="gants-isolants" id="epi11">
+                            <label for="epi11">🧤 Gants isolants électriques</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTILS ET ÉQUIPEMENTS -->
+                <div class="form-section">
+                    <h2><span class="icon">🔧</span> Outils et Équipements Utilisés</h2>
+                    <div class="alert alert-info">
+                        <span class="icon">ℹ️</span>
+                        Sélectionnez tous les outils qui seront nécessaires pour ce TP
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">Outils de Mesure</h3>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="pied-coulisse" id="outil1">
+                            <label for="outil1">📏 Pied à coulisse</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="micrometre" id="outil2">
+                            <label for="outil2">📏 Micromètre</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="comparateur" id="outil3">
+                            <label for="outil3">📏 Comparateur</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="jauge" id="outil4">
+                            <label for="outil4">📏 Jauge d'épaisseur</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="equerre" id="outil5">
+                            <label for="outil5">📐 Équerre de contrôle</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="rugosimetre" id="outil6">
+                            <label for="outil6">📊 Rugosimètre</label>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">Outils de Coupe et Usinage</h3>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="forets" id="outil7">
+                            <label for="outil7">🔩 Forets HSS</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="fraises" id="outil8">
+                            <label for="outil8">⚙️ Fraises (2 tailles, 3 tailles, etc.)</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="outils-tournage" id="outil9">
+                            <label for="outil9">🔧 Outils de tournage</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="tarauds" id="outil10">
+                            <label for="outil10">🔩 Tarauds et filières</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="alesoirs" id="outil11">
+                            <label for="outil11">🔧 Alésoirs</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="lames-scie" id="outil12">
+                            <label for="outil12">🪚 Lames de scie</label>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">Outils de Fixation et Serrage</h3>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="etau" id="outil13">
+                            <label for="outil13">🔨 Étau</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="mandrin" id="outil14">
+                            <label for="outil14">⚙️ Mandrin de serrage</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="plateau" id="outil15">
+                            <label for="outil15">⚙️ Plateau 4 mors</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="serre-joints" id="outil16">
+                            <label for="outil16">🔧 Serre-joints</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="cales" id="outil17">
+                            <label for="outil17">📦 Cales parallèles</label>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">Outils Électriques/Électroniques</h3>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="multimetre" id="outil18">
+                            <label for="outil18">🔌 Multimètre</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="oscilloscope" id="outil19">
+                            <label for="outil19">📊 Oscilloscope</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="fer-souder" id="outil20">
+                            <label for="outil20">🔥 Fer à souder</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="poste-soudure" id="outil21">
+                            <label for="outil21">⚡ Poste de soudure</label>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin: 25px 0 15px 0;">Autres Outils</h3>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="marteau" id="outil22">
+                            <label for="outil22">🔨 Marteau</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="tournevis" id="outil23">
+                            <label for="outil23">🪛 Jeu de tournevis</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="cles" id="outil24">
+                            <label for="outil24">🔧 Clés (plates, à pipe)</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="lime" id="outil25">
+                            <label for="outil25">📏 Limes</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="pointeau" id="outil26">
+                            <label for="outil26">📍 Pointeau</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="outil" value="traceur" id="outil27">
+                            <label for="outil27">✏️ Traceur/Pointe à tracer</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 25px;">
+                        <label>Autres outils nécessaires (non listés)</label>
+                        <textarea id="autresOutils" rows="3" placeholder="Listez les autres outils spécifiques dont vous aurez besoin..."></textarea>
+                    </div>
+                </div>
+
+                <!-- CONSOMMABLES -->
+                <div class="form-section">
+                    <h2><span class="icon">🧴</span> Consommables et Matériaux</h2>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="consommable" value="huile-coupe" id="cons1">
+                            <label for="cons1">🧴 Huile de coupe</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="consommable" value="graisse" id="cons2">
+                            <label for="cons2">🧴 Graisse de lubrification</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="consommable" value="chiffons" id="cons3">
+                            <label for="cons3">🧻 Chiffons</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="consommable" value="gaz-soudure" id="cons4">
+                            <label for="cons4">🔥 Gaz de soudure</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="consommable" value="electrodes" id="cons5">
+                            <label for="cons5">⚡ Électrodes</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="consommable" value="fil-soudure" id="cons6">
+                            <label for="cons6">🔗 Fil de soudure</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 25px;">
+                        <label>Matériaux bruts nécessaires</label>
+                        <textarea id="materiauxBruts" rows="3" placeholder="Ex: Barre d'acier Ø50mm longueur 100mm, Plaque aluminium 200x150x10mm..."></textarea>
+                    </div>
+                </div>
+
+                <!-- VALIDATION -->
+                <div class="form-section">
+                    <h2><span class="icon">✅</span> Validation et Engagement</h2>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" value="verif-machine" id="val1" required>
+                            <label for="val1">✓ J'ai vérifié la disponibilité de la machine</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" value="verif-epi" id="val2" required>
+                            <label for="val2">✓ Tous les EPI sont disponibles et en bon état</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" value="verif-outils" id="val3" required>
+                            <label for="val3">✓ Tous les outils nécessaires sont disponibles</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" value="consignes-securite" id="val4" required>
+                            <label for="val4">✓ Tous les participants connaissent les consignes de sécurité</label>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" name="validation" value="engagement" id="val5" required>
+                            <label for="val5">✓ Je m'engage à respecter toutes les règles de sécurité</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- BOUTONS D'ACTION -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <span class="icon">🔄</span> Réinitialiser
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="previewSummary()">
+                        <span class="icon">👁️</span> Aperçu
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <span class="icon">✓</span> Valider et Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <div class="logo" style="font-size: 2em; margin-bottom: 10px;">🏆 ESIG Global Success</div>
+            <p>École Supérieure d'Ingénierie et de Gestion</p>
+            <p>Service Atelier - Maintenance et Sécurité</p>
+            <p style="margin-top: 15px; opacity: 0.8;">© 2025 ESIG Global Success - Tous droits réservés</p>
+            <p>📞 Contact: +228 XX XX XX XX | 📧 atelier@esig-globalsuccess.tg</p>
+        </div>
+    </div>
+
+    <script>
+        let members = [];
+
+        // Toggle checkbox
+        function toggleCheckbox(item) {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            item.classList.toggle('checked', checkbox.checked);
+        }
+
+        // Initialiser les cases cochées
+        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.closest('.checkbox-item').classList.toggle('checked', this.checked);
+            });
+        });
+
+        // Ajouter un membre
+        function addMember() {
+            const nom = document.getElementById('nomMembre').value.trim();
+            const matricule = document.getElementById('matriculeMembre').value.trim();
+            const classe = document.getElementById('classeMembre').value;
+            const role = document.getElementById('roleMembre').value;
+
+            if (!nom) {
+                alert('⚠️ Veuillez entrer le nom du membre');
+                return;
+            }
+
+            const member = {
+                id: Date.now(),
+                nom: nom,
+                matricule: matricule || 'Non spécifié',
+                classe: classe || 'Non spécifié',
+                role: role || 'Non spécifié'
+            };
+
+            members.push(member);
+            updateMemberList();
+
+            // Reset form
+            document.getElementById('nomMembre').value = '';
+            document.getElementById('matriculeMembre').value = '';
+            document.getElementById('classeMembre').value = '';
+            document.getElementById('roleMembre').value = '';
+
+            document.getElementById('nomMembre').focus();
+        }
+
+        // Mettre à jour la liste des membres
+        function updateMemberList() {
+            const listDiv = document.getElementById('memberList');
+            const noMembers = document.getElementById('noMembers');
+
+            if (members.length === 0) {
+                noMembers.style.display = 'block';
+                listDiv.querySelector('h3').textContent = 'Liste des membres (0)';
+                return;
+            }
+
+            noMembers.style.display = 'none';
+            listDiv.querySelector('h3').textContent = `Liste des membres (${members.length})`;
+
+            const membersHTML = members.map(member => `
+                <div class="member-item">
+                    <div class="member-info">
+                        <strong>${member.nom}</strong><br>
+                        <span style="color: #6b7280;">Matricule: ${member.matricule} | Classe: ${member.classe} | Rôle: ${member.role}</span>
+                    </div>
+                    <button type="button" class="btn btn-danger" onclick="removeMember(${member.id})">
+                        <span class="icon">🗑️</span> Retirer
+                    </button>
+                </div>
+            `).join('');
+
+            // Supprimer le texte "Aucun membre" s'il existe
+            const existingMembers = listDiv.querySelectorAll('.member-item');
+            existingMembers.forEach(item => item.remove());
+
+            listDiv.insertAdjacentHTML('beforeend', membersHTML);
+        }
+
+        // Retirer un membre
+        function removeMember(id) {
+            if (confirm('Êtes-vous sûr de vouloir retirer ce membre ?')) {
+                members = members.filter(m => m.id !== id);
+                updateMemberList();
+            }
+        }
+
+        // Aperçu du résumé
+        function previewSummary() {
+            // Collecter les données
+            const epiSelected = Array.from(document.querySelectorAll('input[name="epi"]:checked'))
+                .map(cb => cb.parentElement.querySelector('label').textContent);
+
+            const outilsSelected = Array.from(document.querySelectorAll('input[name="outil"]:checked'))
+                .map(cb => cb.parentElement.querySelector('label').textContent);
+
+            const consommablesSelected = Array.from(document.querySelectorAll('input[name="consommable"]:checked'))
+                .map(cb => cb.parentElement.querySelector('label').textContent);
+
+            const dateTP = document.getElementById('dateTP').value;
+            const machine = document.getElementById('machine').options[document.getElementById('machine').selectedIndex]?.text || 'Non sélectionné';
+            const responsable = document.getElementById('nomResponsable').value;
+            const telResponsable = document.getElementById('telResponsable').value;
+
+            let summary = `
+                <h2 style="color: var(--primary); margin-bottom: 20px;">📋 Résumé du Formulaire TP</h2>
+
+                <div class="summary-card">
+                    <h3>Informations générales</h3>
+                    <div class="summary-item"><strong>Date:</strong> <span>${dateTP || 'Non spécifié'}</span></div>
+                    <div class="summary-item"><strong>Machine:</strong> <span>${machine}</span></div>
+                    <div class="summary-item"><strong>Titre:</strong> <span>${document.getElementById('titreTP').value || 'Non spécifié'}</span></div>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Responsable</h3>
+                    <div class="summary-item"><strong>Nom:</strong> <span>${responsable || 'Non spécifié'}</span></div>
+                    <div class="summary-item"><strong>Téléphone:</strong> <span>${telResponsable || 'Non spécifié'}</span></div>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Membres de l'équipe (${members.length})</h3>
+                    ${members.length > 0 ? members.map(m => `
+                        <div class="summary-item">
+                            <strong>${m.nom}</strong>
+                            <span>${m.classe} - ${m.role}</span>
+                        </div>
+                    `).join('') : '<p style="text-align: center; color: #6b7280;">Aucun membre ajouté</p>'}
+                </div>
+
+                <div class="summary-card">
+                    <h3>EPI sélectionnés (${epiSelected.length})</h3>
+                    ${epiSelected.length > 0 ? epiSelected.map(epi => `
+                        <div class="summary-item">${epi}</div>
+                    `).join('') : '<p style="text-align: center; color: #6b7280;">Aucun EPI sélectionné</p>'}
+                </div>
+
+                <div class="summary-card">
+                    <h3>Outils sélectionnés (${outilsSelected.length})</h3>
+                    ${outilsSelected.length > 0 ? outilsSelected.map(outil => `
+                        <div class="summary-item">${outil}</div>
+                    `).join('') : '<p style="text-align: center; color: #6b7280;">Aucun outil sélectionné</p>'}
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <span class="icon">🖨️</span> Imprimer
+                    </button>
+                </div>
+            `;
+
+            const newWindow = window.open('', 'Aperçu', 'width=800,height=600');
+            newWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Aperçu - Formulaire TP</title>
+                    <style>
+                        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background: #f3f4f6; }
+                        .summary-card { background: white; padding: 20px; margin: 15px 0; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+                        .summary-item { padding: 10px; margin: 8px 0; background: #f9fafb; border-radius: 5px; display: flex; justify-content: space-between; }
+                        h2 { color: #1a365d; }
+                        h3 { color: #1a365d; margin-bottom: 15px; }
+                        .btn { padding: 12px 25px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; }
+                        .btn:hover { background: #1d4ed8; }
+                    </style>
+                </head>
+                <body>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <h1 style="color: #1a365d; font-size: 2.5em;">🏆 ESIG Global Success</h1>
+                            <p style="color: #6b7280; font-size: 1.2em;">Formulaire de Préparation TP Atelier</p>
+                        </div>
+                        ${summary}
+                    </div>
+                </body>
+                </html>
+            `);
+        }
+
+        // Soumission du formulaire
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            // Vérifications
+            if (members.length === 0) {
+                alert('⚠️ Veuillez ajouter au moins un membre à l\'équipe');
+                return;
+            }
+
+            const epiChecked = document.querySelectorAll('input[name="epi"]:checked').length;
+            if (epiChecked === 0) {
+                alert('⚠️ Veuillez sélectionner au moins un EPI');
+                return;
+            }
+
+            const outilsChecked = document.querySelectorAll('input[name="outil"]:checked').length;
+            if (outilsChecked === 0) {
+                alert('⚠️ Veuillez sélectionner au moins un outil');
+                return;
+            }
+
+            const validationsChecked = document.querySelectorAll('input[name="validation"]:checked').length;
+            if (validationsChecked < 5) {
+                alert('⚠️ Vous devez cocher toutes les cases de validation');
+                return;
+            }
+
+            // Simulation d'enregistrement
+            const formData = {
+                date: document.getElementById('dateTP').value,
+                machine: document.getElementById('machine').value,
+                titre: document.getElementById('titreTP').value,
+                responsable: {
+                    nom: document.getElementById('nomResponsable').value,
+                    tel: document.getElementById('telResponsable').value,
+                    email: document.getElementById('emailResponsable').value
+                },
+                membres: members,
+                epi: Array.from(document.querySelectorAll('input[name="epi"]:checked')).map(cb => cb.value),
+                outils: Array.from(document.querySelectorAll('input[name="outil"]:checked')).map(cb => cb.value),
+                consommables: Array.from(document.querySelectorAll('input[name="consommable"]:checked')).map(cb => cb.value)
+            };
+
+            console.log('Données du formulaire:', formData);
+
+            // Message de succès
+            alert(`✅ Formulaire enregistré avec succès!\n\n` +
+                  `Numéro de TP: TP-${Date.now().toString().slice(-8)}\n` +
+                  `Date: ${formData.date}\n` +
+                  `Responsable: ${formData.responsable.nom}\n` +
+                  `Membres: ${members.length}\n\n` +
+                  `Un email de confirmation a été envoyé à tous les participants.`);
+
+            // Optionnel: réinitialiser le formulaire
+            if (confirm('Voulez-vous réinitialiser le formulaire pour un nouveau TP ?')) {
+                resetForm();
+            }
+        }
+
+        // Réinitialiser le formulaire
+        function resetForm() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire ?')) {
+                document.getElementById('tpForm').reset();
+                members = [];
+                updateMemberList();
+
+                // Décocher toutes les checkboxes
+                document.querySelectorAll('.checkbox-item').forEach(item => {
+                    item.classList.remove('checked');
+                    item.querySelector('input[type="checkbox"]').checked = false;
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Initialisation
+        window.onload = function() {
+            // Set date par défaut
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateTP').value = today;
+
+            // Set heure par défaut
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('heureDebut').value = `${hours}:${minutes}`;
+        };
+    </script>
+</body>
+</html>

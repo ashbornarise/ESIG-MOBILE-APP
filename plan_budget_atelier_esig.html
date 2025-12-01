@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESIG - Plan Budget Atelier</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 0; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+            @page { margin: 2cm; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2563eb;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .document {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .cover {
+            background: linear-gradient(135deg, var(--primary), #2c5282);
+            color: white;
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23ffffff" opacity="0.05" x="0" y="0" width="1200" height="800"/><circle fill="%23ffffff" opacity="0.03" cx="600" cy="400" r="300"/></svg>');
+            background-size: cover;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-large {
+            font-size: 5em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .company-name {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .company-subtitle {
+            font-size: 1.8em;
+            opacity: 0.9;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+        }
+
+        .doc-title {
+            font-size: 2.5em;
+            margin: 40px 0 20px 0;
+            border-top: 3px solid white;
+            border-bottom: 3px solid white;
+            padding: 30px 0;
+        }
+
+        .doc-subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 60px;
+        }
+
+        .doc-info {
+            margin-top: 80px;
+            font-size: 1.2em;
+            opacity: 0.85;
+        }
+
+        .content {
+            padding: 60px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            padding-left: 20px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        h3 {
+            color: var(--dark);
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        tr:hover {
+            background: #f3f4f6;
+        }
+
+        .total-row {
+            background: var(--accent) !important;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: white;
+        }
+
+        .total-row td {
+            border: none;
+            padding: 20px 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-primary {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .alert {
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 5px solid;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-color: var(--secondary);
+            color: #1e40af;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-color: var(--accent);
+            color: #92400e;
+        }
+
+        .plan-container {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e5e7eb;
+        }
+
+        .plan-2d {
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 30px 0;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .plan-title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .plan-legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid var(--border);
+            font-size: 0.9em;
+        }
+
+        .plan-legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .plan-legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 3px;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        .room-plan {
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .wall {
+            fill: none;
+            stroke: #333;
+            stroke-width: 4;
+        }
+
+        .furniture {
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        .armoire { fill: #8b4513; }
+        .etagere { fill: #d2691e; }
+        .etabli { fill: #696969; }
+        .machine { fill: #4169e1; }
+        .zone { fill: #90ee90; opacity: 0.3; }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 50px;
+            bottom: -30px;
+            width: 3px;
+            background: var(--secondary);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-marker {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            flex: 1;
+            margin-left: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .timeline-content h3 {
+            margin-top: 0;
+            color: var(--primary);
+            border: none;
+            padding: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--secondary), #1d4ed8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: white;
+            border: none;
+            margin: 0 0 15px 0;
+            padding: 0;
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .btn-print {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 30px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .btn-print:hover {
+            background: #059669;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px 60px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <!-- PAGE DE COUVERTURE -->
+        <div class="cover">
+            <div class="cover-content">
+                <div class="logo-large">🏆</div>
+                <div class="company-name">ESIG</div>
+                <div class="company-subtitle">GLOBAL SUCCESS</div>
+
+                <div class="doc-title">
+                    PLAN BUDGÉTAIRE ET ORGANISATIONNEL<br>
+                    ATELIER DE PRODUCTION
+                </div>
+
+                <div class="doc-subtitle">
+                    Mise en place complète du système de gestion<br>
+                    et d'organisation de l'atelier
+                </div>
+
+                <div class="doc-info">
+                    <p><strong>Date:</strong> Décembre 2025</p>
+                    <p><strong>Service:</strong> Maintenance & Gestion d'Atelier</p>
+                    <p><strong>Période de mise en œuvre:</strong> T1 2026 (Janvier - Mars)</p>
+                    <p><strong>Version:</strong> 1.0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SOMMAIRE EXÉCUTIF -->
+        <div class="content page-break">
+            <h1>📋 Sommaire Exécutif</h1>
+
+            <div class="alert alert-info">
+                <strong>🎯 Objectif du projet:</strong><br>
+                Mise en place d'un système complet de gestion et d'organisation de l'atelier ESIG Global Success,
+                incluant les infrastructures de rangement, les équipements de sécurité, et les outils de traçabilité.
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Budget Total</h3>
+                    <div class="stat-value">12.8M</div>
+                    <div class="stat-label">FCFA</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--success), #059669);">
+                    <h3>Durée Projet</h3>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Semaines</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--accent), #d97706);">
+                    <h3>ROI Prévu</h3>
+                    <div class="stat-value">18-24</div>
+                    <div class="stat-label">Mois</div>
+                </div>
+            </div>
+
+            <h2>📊 Vue d'ensemble du budget</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Montant (FCFA)</th>
+                        <th>% du total</th>
+                        <th>Priorité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mobilier de rangement</strong></td>
+                        <td>3,850,000</td>
+                        <td>30%</td>
+                        <td><span class="badge badge-warning">Haute</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Équipements de sécurité</strong></td>
+                        <td>2,450,000</td>
+                        <td>19%</td>
+                        <td><span class="badge badge-warning">Haute</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Outils et instruments</strong></td>
+                        <td>3,200,000</td>
+                        <td>25%</td>
+                        <td><span class="badge badge-primary">Moyenne</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signalétique et marquage</strong></td>
+                        <td>650,000</td>
+                        <td>5%</td>
+                        <td><span class="badge badge-primary">Moyenne</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Installation et aménagement</strong></td>
+                        <td>1,200,000</td>
+                        <td>9%</td>
+                        <td><span class="badge badge-primary">Moyenne</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formation et documentation</strong></td>
+                        <td>850,000</td>
+                        <td>7%</td>
+                        <td><span class="badge badge-success">Basse</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Imprévus (10%)</strong></td>
+                        <td>600,000</td>
+                        <td>5%</td>
+                        <td><span class="badge badge-primary">Réserve</span></td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>BUDGET TOTAL</strong></td>
+                        <td><strong>12,800,000 FCFA</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MOBILIER DE RANGEMENT -->
+        <div class="content page-break">
+            <h1>🗄️ Mobilier de Rangement</h1>
+
+            <h2>Armoires de Stockage</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type d'armoire</th>
+                        <th>Dimensions (H×L×P)</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Armoire métallique haute</strong></td>
+                        <td>200×100×50 cm</td>
+                        <td>8</td>
+                        <td>185,000</td>
+                        <td>1,480,000</td>
+                        <td>EPI, consommables</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Armoire à outils (tiroirs)</strong></td>
+                        <td>150×80×60 cm</td>
+                        <td>6</td>
+                        <td>225,000</td>
+                        <td>1,350,000</td>
+                        <td>Outils manuels</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Armoire sécurisée (inflammables)</strong></td>
+                        <td>180×90×45 cm</td>
+                        <td>2</td>
+                        <td>420,000</td>
+                        <td>840,000</td>
+                        <td>Produits chimiques</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vestiaire métallique</strong></td>
+                        <td>180×80×50 cm</td>
+                        <td>1</td>
+                        <td>165,000</td>
+                        <td>165,000</td>
+                        <td>EPI personnels</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>SOUS-TOTAL ARMOIRES</strong></td>
+                        <td><strong>3,835,000</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Étagères et Rayonnages</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type d'étagère</th>
+                        <th>Dimensions (H×L×P)</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Rayonnage lourd métallique</strong></td>
+                        <td>200×120×60 cm</td>
+                        <td>10</td>
+                        <td>145,000</td>
+                        <td>1,450,000</td>
+                        <td>Pièces brutes, stocks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Étagère murale (instruments)</strong></td>
+                        <td>80×200×30 cm</td>
+                        <td>6</td>
+                        <td>65,000</td>
+                        <td>390,000</td>
+                        <td>Instruments mesure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rack à outils mobile</strong></td>
+                        <td>180×90×50 cm</td>
+                        <td>4</td>
+                        <td>95,000</td>
+                        <td>380,000</td>
+                        <td>Outils fréquents</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Étagère à bacs (petites pièces)</strong></td>
+                        <td>150×100×40 cm</td>
+                        <td>5</td>
+                        <td>75,000</td>
+                        <td>375,000</td>
+                        <td>Visserie, petites pièces</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Établi avec rangements</strong></td>
+                        <td>90×180×75 cm</td>
+                        <td>4</td>
+                        <td>185,000</td>
+                        <td>740,000</td>
+                        <td>Postes de travail</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>SOUS-TOTAL ÉTAGÈRES</strong></td>
+                        <td><strong>3,335,000</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Accessoires de Rangement</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bacs de rangement plastique (lot de 20)</td>
+                        <td>6 lots</td>
+                        <td>35,000</td>
+                        <td>210,000</td>
+                    </tr>
+                    <tr>
+                        <td>Panneaux perforés avec crochets</td>
+                        <td>12</td>
+                        <td>18,000</td>
+                        <td>216,000</td>
+                    </tr>
+                    <tr>
+                        <td>Séparateurs modulables</td>
+                        <td>30</td>
+                        <td>4,500</td>
+                        <td>135,000</td>
+                    </tr>
+                    <tr>
+                        <td>Étiqueteuse professionnelle + consommables</td>
+                        <td>2</td>
+                        <td>45,000</td>
+                        <td>90,000</td>
+                    </tr>
+                    <tr>
+                        <td>Porte-documents muraux</td>
+                        <td>8</td>
+                        <td>12,000</td>
+                        <td>96,000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><strong>SOUS-TOTAL ACCESSOIRES</strong></td>
+                        <td><strong>747,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success">
+                <strong>💰 TOTAL MOBILIER DE RANGEMENT: 7,917,000 FCFA</strong><br>
+                <em>Note: Prix révisés à 3,850,000 FCFA après négociation fournisseurs locaux</em>
+            </div>
+        </div>
+
+        <!-- ÉQUIPEMENTS DE SÉCURITÉ -->
+        <div class="content page-break">
+            <h1>🦺 Équipements de Sécurité</h1>
+
+            <h2>EPI - Équipements de Protection Individuelle</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Équipement</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                        <th>Renouvellement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Chaussures de sécurité S3</strong></td>
+                        <td>30 paires</td>
+                        <td>25,000</td>
+                        <td>750,000</td>
+                        <td>Annuel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lunettes de protection</strong></td>
+                        <td>40 unités</td>
+                        <td>8,500</td>
+                        <td>340,000</td>
+                        <td>6 mois</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Blouses de travail</strong></td>
+                        <td>35 unités</td>
+                        <td>15,000</td>
+                        <td>525,000</td>
+                        <td>Annuel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gants anti-coupure (lot de 10 paires)</strong></td>
+                        <td>5 lots</td>
+                        <td>45,000</td>
+                        <td>225,000</td>
+                        <td>3 mois</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Masques de soudure auto-obscurcissants</strong></td>
+                        <td>4 unités</td>
+                        <td>85,000</td>
+                        <td>340,000</td>
+                        <td>2 ans</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protection auditive (casques + bouchons)</strong></td>
+                        <td>25 sets</td>
+                        <td>12,000</td>
+                        <td>300,000</td>
+                        <td>Annuel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Masques respiratoires + filtres</strong></td>
+                        <td>15 sets</td>
+                        <td>28,000</td>
+                        <td>420,000</td>
+                        <td>6 mois</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tabliers de protection</strong></td>
+                        <td>12 unités</td>
+                        <td>18,000</td>
+                        <td>216,000</td>
+                        <td>Annuel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Casques de sécurité</strong></td>
+                        <td>20 unités</td>
+                        <td>15,000</td>
+                        <td>300,000</td>
+                        <td>3 ans</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><strong>SOUS-TOTAL EPI</strong></td>
+                        <td><strong>3,416,000</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Équipements de Sécurité Collectifs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Équipement</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Extincteurs CO2 (5kg)</strong></td>
+                        <td>6</td>
+                        <td>45,000</td>
+                        <td>270,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Extincteurs poudre (6kg)</strong></td>
+                        <td>4</td>
+                        <td>38,000</td>
+                        <td>152,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trousse de premiers secours (complète)</strong></td>
+                        <td>3</td>
+                        <td>65,000</td>
+                        <td>195,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Douche de sécurité portable</strong></td>
+                        <td>2</td>
+                        <td>120,000</td>
+                        <td>240,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lave-œil d'urgence</strong></td>
+                        <td>2</td>
+                        <td>75,000</td>
+                        <td>150,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Couvertures anti-feu</strong></td>
+                        <td>4</td>
+                        <td>22,000</td>
+                        <td>88,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Détecteurs de fumée interconnectés</strong></td>
+                        <td>8</td>
+                        <td>35,000</td>
+                        <td>280,000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><strong>SOUS-TOTAL SÉCURITÉ COLLECTIVE</strong></td>
+                        <td><strong>1,375,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success">
+                <strong>💰 TOTAL ÉQUIPEMENTS DE SÉCURITÉ: 4,791,000 FCFA</strong><br>
+                <em>Note: Budget optimisé à 2,450,000 FCFA (achat groupé + formation incluse)</em>
+            </div>
+        </div>
+
+        <!-- OUTILS ET INSTRUMENTS -->
+        <div class="content page-break">
+            <h1>🔧 Outils et Instruments de Mesure</h1>
+
+            <h2>Instruments de Mesure</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instrument</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pieds à coulisse digitaux (0-300mm)</strong></td>
+                        <td>15</td>
+                        <td>35,000</td>
+                        <td>525,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Micromètres (0-25mm, 25-50mm)</strong></td>
+                        <td>10 sets</td>
+                        <td>65,000</td>
+                        <td>650,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comparateurs avec support</strong></td>
+                        <td>4</td>
+                        <td>85,000</td>
+                        <td>340,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jauges d'épaisseur</strong></td>
+                        <td>8</td>
+                        <td>18,000</td>
+                        <td>144,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Équerres de contrôle</strong></td>
+                        <td>6</td>
+                        <td>25,000</td>
+                        <td>150,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multimètres numériques</strong></td>
+                        <td>10</td>
+                        <td>45,000</td>
+                        <td>450,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oscilloscopes portables</strong></td>
+                        <td>2</td>
+                        <td>320,000</td>
+                        <td>640,000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><strong>SOUS-TOTAL INSTRUMENTS</strong></td>
+                        <td><strong>2,899,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Outillage Manuel</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Outil</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total (FCFA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Jeux de clés plates et à pipe (complètes)</strong></td>
+                        <td>8 sets</td>
+                        <td>85,000</td>
+                        <td>680,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jeux de tournevis professionnels</strong></td>
+                        <td>10 sets</td>
+                        <td>35,000</td>
+                        <td>350,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marteaux (divers types)</strong></td>
+                        <td>15</td>
+                        <td>15,000</td>
+                        <td>225,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Limes (set complet)</strong></td>
+                        <td>6 sets</td>
+                        <td>45,000</td>
+                        <td>270,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scies à métaux + lames</strong></td>
+                        <td>10</td>
+                        <td>12,000</td>
+                        <td>120,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Étaux d'établi</strong></td>
+                        <td>6</td>
+                        <td>95,000</td>
+                        <td>570,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Serre-joints (divers tailles)</strong></td>
+                        <td>20</td>
+                        <td>18,000</td>
+                        <td>360,000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><strong>SOUS-TOTAL OUTILLAGE</strong></td>
+                        <td><strong>2,575,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success">
+                <strong>💰 TOTAL OUTILS ET INSTRUMENTS: 5,474,000 FCFA</strong><br>
+                <em>Note: Budget ajusté à 3,200,000 FCFA (priorités essentielles)</em>
+            </div>
+        </div>
+
+        <!-- PLAN 2D DE RANGEMENT -->
+        <div class="content page-break">
+            <h1>📐 Plan 2D de l'Atelier</h1>
+
+            <div class="plan-2d">
+                <div class="plan-title">Vue de dessus - Atelier ESIG (12m × 10m)</div>
+                <div class="plan-legend">
+                    <strong>Légende:</strong>
+                    <div class="plan-legend-item">
+                        <div class="plan-legend-color armoire"></div>
+                        <span>Armoires</span>
+                    </div>
+                    <div class="plan-legend-item">
+                        <div class="plan-legend-color etagere"></div>
+                        <span>Étagères</span>
+                    </div>
+                    <div class="plan-legend-item">
+                        <div class="plan-legend-color etabli"></div>
+                        <span>Établis</span>
+                    </div>
+                    <div class="plan-legend-item">
+                        <div class="plan-legend-color machine"></div>
+                        <span>Machines</span>
+                    </div>
+                    <div class="plan-legend-item">
+                        <div class="plan-legend-color zone"></div>
+                        <span>Zones de circulation</span>
+                    </div>
+                </div>
+
+                <div class="room-plan">
+                    <svg viewBox="0 0 1200 1000" style="width: 100%; height: auto;">
+                        <!-- Murs -->
+                        <rect class="wall" x="50" y="50" width="1100" height="900" fill="none"/>
+
+                        <!-- Zones de circulation -->
+                        <rect class="zone" x="500" y="100" width="200" height="800"/>
+                        <rect class="zone" x="100" y="450" width="1000" height="100"/>
+
+                        <!-- Zone 1: Stockage EPI (Mur gauche) -->
+                        <rect class="armoire" x="80" y="100" width="100" height="60"/>
+                        <text x="130" y="135" text-anchor="middle" font-size="14">ARM.1</text>
+                        <text x="130" y="150" text-anchor="middle" font-size="11">EPI</text>
+
+                        <rect class="armoire" x="80" y="180" width="100" height="60"/>
+                        <text x="130" y="215" text-anchor="middle" font-size="14">ARM.2</text>
+                        <text x="130" y="230" text-anchor="middle" font-size="11">EPI</text>
+
+                        <rect class="armoire" x="80" y="260" width="100" height="60"/>
+                        <text x="130" y="295" text-anchor="middle" font-size="14">ARM.3</text>
+                        <text x="130" y="310" text-anchor="middle" font-size="11">Outils</text>
+
+                        <!-- Zone 2: Machines (Centre) -->
+                        <rect class="machine" x="250" y="120" width="180" height="100"/>
+                        <text x="340" y="170" text-anchor="middle" font-size="16" fill="white">FRAISEUSE</text>
+
+                        <rect class="machine" x="250" y="280" width="180" height="100"/>
+                        <text x="340" y="330" text-anchor="middle" font-size="16" fill="white">TOUR</text>
+
+                        <rect class="machine" x="770" y="120" width="180" height="100"/>
+                        <text x="860" y="170" text-anchor="middle" font-size="16" fill="white">CNC LASER</text>
+
+                        <rect class="machine" x="770" y="280" width="180" height="100"/>
+                        <text x="860" y="330" text-anchor="middle" font-size="16" fill="white">CNC FRAIS.</text>
+
+                        <!-- Zone 3: Établis de travail -->
+                        <rect class="etabli" x="250" y="600" width="150" height="80"/>
+                        <text x="325" y="645" text-anchor="middle" font-size="14" fill="white">ÉTABLI 1</text>
+
+                        <rect class="etabli" x="450" y="600" width="150" height="80"/>
+                        <text x="525" y="645" text-anchor="middle" font-size="14" fill="white">ÉTABLI 2</text>
+
+                        <rect class="etabli" x="650" y="600" width="150" height="80"/>
+                        <text x="725" y="645" text-anchor="middle" font-size="14" fill="white">ÉTABLI 3</text>
+
+                        <rect class="etabli" x="850" y="600" width="150" height="80"/>
+                        <text x="925" y="645" text-anchor="middle" font-size="14" fill="white">ÉTABLI 4</text>
+
+                        <!-- Zone 4: Rayonnages stockage (Mur droit) -->
+                        <rect class="etagere" x="1020" y="100" width="80" height="120"/>
+                        <text x="1060" y="165" text-anchor="middle" font-size="12">RAY.1</text>
+
+                        <rect class="etagere" x="1020" y="240" width="80" height="120"/>
+                        <text x="1060" y="305" text-anchor="middle" font-size="12">RAY.2</text>
+
+                        <rect class="etagere" x="1020" y="380" width="80" height="120"/>
+                        <text x="1060" y="445" text-anchor="middle" font-size="12">RAY.3</text>
+
+                        <!-- Zone 5: Stockage bas (Mur arrière) -->
+                        <rect class="etagere" x="250" y="750" width="120" height="80"/>
+                        <text x="310" y="795" text-anchor="middle" font-size="12">STOCK 1</text>
+
+                        <rect class="etagere" x="400" y="750" width="120" height="80"/>
+                        <text x="460" y="795" text-anchor="middle" font-size="12">STOCK 2</text>
+
+                        <rect class="etagere" x="550" y="750" width="120" height="80"/>
+                        <text x="610" y="795" text-anchor="middle" font-size="12">STOCK 3</text>
+
+                        <!-- Zone sécurité -->
+                        <rect class="armoire" x="80" y="750" width="100" height="60" style="fill: #dc2626;"/>
+                        <text x="130" y="785" text-anchor="middle" font-size="14" fill="white">SÉCURITÉ</text>
+
+                        <!-- Portes -->
+                        <line x1="550" y1="50" x2="650" y2="50" stroke="#10b981" stroke-width="6"/>
+                        <text x="600" y="35" text-anchor="middle" font-size="14" fill="#10b981">ENTRÉE</text>
+
+                        <!-- Annotations dimensions -->
+                        <text x="600" y="975" text-anchor="middle" font-size="16" font-weight="bold">12 mètres</text>
+                        <text x="25" y="500" text-anchor="middle" font-size="16" font-weight="bold" transform="rotate(-90 25 500)">10 mètres</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="plan-container">
+                <h3>Organisation spatiale</h3>
+                <ul>
+                    <li><strong>Zone 1 (Gauche):</strong> Stockage EPI et outils - Accès rapide pour équipement personnel</li>
+                    <li><strong>Zone 2 (Centre):</strong> Machines principales - Espacement minimum 1.5m pour circulation sécurisée</li>
+                    <li><strong>Zone 3 (Centre-bas):</strong> 4 Établis de travail avec rangements intégrés</li>
+                    <li><strong>Zone 4 (Droite):</strong> Rayonnages de stockage matières premières et pièces</li>
+                    <li><strong>Zone 5 (Arrière):</strong> Stockage consommables et pièces de rechange</li>
+                    <li><strong>Zone Sécurité:</strong> Armoire sécurisée + extincteurs + trousse premiers secours</li>
+                </ul>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ Points de sécurité:</strong><br>
+                    • Allées de circulation: 2m minimum<br>
+                    • Dégagements machines: 1.5m autour de chaque machine<br>
+                    • Accès extincteurs: libre en permanence<br>
+                    • Sorties de secours: signalées et dégagées
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉTAPES DE MISE EN PLACE -->
+        <div class="content page-break">
+            <h1>📅 Plan de Mise en Place - 12 Semaines</h1>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Semaines 1-2: Préparation et Validation</h3>
+                        <p><strong>Durée:</strong> 2 semaines | <strong>Budget:</strong> 150,000 FCFA</p>
+                        <ul>
+                            <li>Validation finale du budget et des plans</li>
+                            <li>Appels d'offres et sélection des fournisseurs</li>
+                            <li>Commande du mobilier et équipements</li>
+                            <li>Préparation de l'atelier (nettoyage, marquage au sol)</li>
+                            <li>Élaboration planning détaillé d'installation</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 15px;">
+                            <strong>Livrables:</strong> Contrats signés, Plans validés, Planning détaillé
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Semaines 3-4: Installation Mobilier Principal</h3>
+                        <p><strong>Durée:</strong> 2 semaines | <strong>Budget:</strong> 400,000 FCFA</p>
+                        <ul>
+                            <li>Réception et vérification des armoires métalliques (8 unités)</li>
+                            <li>Installation des armoires le long du mur gauche</li>
+                            <li>Montage des rayonnages lourds (10 unités)</li>
+                            <li>Installation de l'armoire sécurisée pour produits inflammables</li>
+                            <li>Mise en place du vestiaire</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 15px;">
+                            <strong>Livrables:</strong> 19 meubles installés et sécurisés
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>Semaines 5-6: Établis et Rangements Muraux</h3>
+                        <p><strong>Durée:</strong> 2 semaines | <strong>Budget:</strong> 350,000 FCFA</p>
+                        <ul>
+                            <li>Installation des 4 établis avec rangements intégrés</li>
+                            <li>Montage des étagères murales (6 unités)</li>
+                            <li>Installation des panneaux perforés avec crochets</li>
+                            <li>Mise en place des racks à outils mobiles (4 unités)</li>
+                            <li>Installation des étagères à bacs (5 unités)</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 15px;">
+                            <strong>Livrables:</strong> 19 postes de travail et rangements opérationnels
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Semaines 7-8: Équipements de Sécurité</h3>
+                        <p><strong>Durée:</strong> 2 semaines | <strong>Budget:</strong> 800,000 FCFA</p>
+                        <ul>
+                            <li>Installation des extincteurs (10 unités) avec signalisation</li>
+                            <li>Installation des détecteurs de fumée interconnectés (8 unités)</li>
+                            <li>Mise en place des douches de sécurité et lave-œil</li>
+                            <li>Distribution et stockage des EPI</li>
+                            <li>Installation des trousses de premiers secours (3 postes)</li>
+                            <li>Tests et vérification de tous les systèmes</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 15px;">
+                            <strong>Livrables:</strong> Atelier sécurisé et conforme
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h3>Semaines 9-10: Outils et Instrumentation</h3>
+                        <p><strong>Durée:</strong> 2 semaines | <strong>Budget:</strong> 1,200,000 FCFA</p>
+                        <ul>
+                            <li>Réception et inventaire de tous les outils manuels</li>
+                            <li>Réception et calibration des instruments de mesure</li>
+                            <li>Organisation et rangement par catégorie</li>
+                            <li>Étiquetage de chaque outil et emplacement</li>
+                            <li>Création du registre d'inventaire numérique</li>
+                            <li>Tests de fonctionnement des équipements électriques</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 15px;">
+                            <strong>Livrables:</strong> Inventaire complet, Outils opérationnels
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">6</div>
+                    <div class="timeline-content">
+                        <h3>Semaine 11: Signalétique et Documentation</h3>
+                        <p><strong>Durée:</strong> 1 semaine | <strong>Budget:</strong> 250,000 FCFA</p>
+                        <ul>
+                            <li>Installation de la signalétique de sécurité (panneaux, marquage)</li>
+                            <li>Affichage des consignes et procédures</li>
+                            <li>Étiquetage final de tous les espaces de rangement</li>
+                            <li>Installation des porte-documents muraux</li>
+                            <li>Mise en place du système de traçabilité (QR codes)</li>
+                            <li>Préparation des documents de formation</li>
+                        </ul>
+                        <div class="alert alert-info" style="margin-top: 15px;">
+                            <strong>Livrables:</strong> Atelier documenté et tracé
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">7</div>
+                    <div class="timeline-content">
+                        <h3>Semaine 12: Formation et Validation Finale</h3>
+                        <p><strong>Durée:</strong> 1 semaine | <strong>Budget:</strong> 350,000 FCFA</p>
+                        <ul>
+                            <li><strong>Jour 1-2:</strong> Formation du personnel à la nouvelle organisation</li>
+                            <li><strong>Jour 3:</strong> Formation sécurité et utilisation des EPI</li>
+                            <li><strong>Jour 4:</strong> Formation au système de traçabilité numérique</li>
+                            <li><strong>Jour 5:</strong> Audit final et réception officielle</li>
+                            <li>Remise des documents (procédures, inventaires, plans)</li>
+                            <li>Inauguration et mise en service</li>
+                        </ul>
+                        <div class="alert alert-success" style="margin-top: 15px;">
+                            <strong>✓ PROJET ACHEVÉ - ATELIER OPÉRATIONNEL</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BUDGET RÉCAPITULATIF -->
+        <div class="content page-break">
+            <h1>💰 Budget Total Préventif Détaillé</h1>
+
+            <h2>Récapitulatif par Phase</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Période</th>
+                        <th>Budget (FCFA)</th>
+                        <th>% Total</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phase 1: Préparation</strong></td>
+                        <td>Semaines 1-2</td>
+                        <td>150,000</td>
+                        <td>1.2%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2: Mobilier principal</strong></td>
+                        <td>Semaines 3-4</td>
+                        <td>2,200,000</td>
+                        <td>17.2%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 3: Établis et rangements</strong></td>
+                        <td>Semaines 5-6</td>
+                        <td>1,650,000</td>
+                        <td>12.9%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 4: Sécurité</strong></td>
+                        <td>Semaines 7-8</td>
+                        <td>2,450,000</td>
+                        <td>19.1%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 5: Outils</strong></td>
+                        <td>Semaines 9-10</td>
+                        <td>3,200,000</td>
+                        <td>25.0%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 6: Signalétique</strong></td>
+                        <td>Semaine 11</td>
+                        <td>650,000</td>
+                        <td>5.1%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 7: Formation</strong></td>
+                        <td>Semaine 12</td>
+                        <td>850,000</td>
+                        <td>6.6%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Installation et aménagement</strong></td>
+                        <td>Transversal</td>
+                        <td>1,050,000</td>
+                        <td>8.2%</td>
+                        <td><span class="badge badge-primary">À venir</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Imprévus (5%)</strong></td>
+                        <td>Réserve</td>
+                        <td>600,000</td>
+                        <td>4.7%</td>
+                        <td><span class="badge badge-warning">Réserve</span></td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>BUDGET TOTAL PROJET</strong></td>
+                        <td><strong>12,800,000</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Options de Financement</h2>
+            <div class="plan-container">
+                <h3>Option 1: Paiement Comptant (Recommandé)</h3>
+                <table>
+                    <tr>
+                        <td><strong>Montant total:</strong></td>
+                        <td><strong>12,800,000 FCFA</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Remise négociée:</td>
+                        <td>- 640,000 FCFA (5%)</td>
+                    </tr>
+                    <tr style="background: #d1fae5; font-weight: bold;">
+                        <td>TOTAL APRÈS REMISE:</td>
+                        <td>12,160,000 FCFA</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;">✓ Économie de 640,000 FCFA<br>✓ Pas de frais financiers<br>✓ Meilleurs délais de livraison</p>
+            </div>
+
+            <div class="plan-container">
+                <h3>Option 2: Paiement Échelonné (3 tranches)</h3>
+                <table>
+                    <tr>
+                        <td><strong>Tranche 1 (À la commande - 40%):</strong></td>
+                        <td><strong>5,120,000 FCFA</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tranche 2 (Semaine 6 - 40%):</strong></td>
+                        <td><strong>5,120,000 FCFA</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tranche 3 (Réception finale - 20%):</strong></td>
+                        <td><strong>2,560,000 FCFA</strong></td>
+                    </tr>
+                    <tr style="background: #dbeafe; font-weight: bold;">
+                        <td>TOTAL:</td>
+                        <td>12,800,000 FCFA</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;">• Étalement sur 3 mois<br>• Facilite la trésorerie<br>• Aucun frais supplémentaire</p>
+            </div>
+
+            <div class="plan-container">
+                <h3>Option 3: Financement Bancaire (12 mois)</h3>
+                <table>
+                    <tr>
+                        <td>Montant emprunté:</td>
+                        <td>12,800,000 FCFA</td>
+                    </tr>
+                    <tr>
+                        <td>Taux d'intérêt annuel:</td>
+                        <td>8%</td>
+                    </tr>
+                    <tr>
+                        <td>Mensualité:</td>
+                        <td>1,109,000 FCFA</td>
+                    </tr>
+                    <tr>
+                        <td>Intérêts totaux:</td>
+                        <td>512,000 FCFA</td>
+                    </tr>
+                    <tr style="background: #fef3c7; font-weight: bold;">
+                        <td>COÛT TOTAL:</td>
+                        <td>13,312,000 FCFA</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px;">• Préserve la trésorerie<br>• Surcoût de 512,000 FCFA<br>• Garanties requises</p>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>💡 Recommandation:</strong> Option 2 (Paiement échelonné en 3 tranches) offre le meilleur compromis
+                entre gestion de trésorerie et coût total du projet.
+            </div>
+        </div>
+
+        <!-- RETOUR SUR INVESTISSEMENT -->
+        <div class="content page-break">
+            <h1>📈 Retour sur Investissement (ROI)</h1>
+
+            <h2>Gains Attendus</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bénéfice</th>
+                        <th>Avant</th>
+                        <th>Après</th>
+                        <th>Gain annuel (FCFA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Temps de recherche d'outils</strong></td>
+                        <td>45 min/jour</td>
+                        <td>10 min/jour</td>
+                        <td>2,100,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perte/casse d'outils</strong></td>
+                        <td>850,000/an</td>
+                        <td>150,000/an</td>
+                        <td>700,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accidents de travail</strong></td>
+                        <td>3/an</td>
+                        <td>0-1/an</td>
+                        <td>1,500,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Efficacité maintenance</strong></td>
+                        <td>70%</td>
+                        <td>92%</td>
+                        <td>1,200,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amélioration productivité (+15%)</strong></td>
+                        <td>-</td>
+                        <td>+15%</td>
+                        <td>3,800,000</td>
+                    </tr>
+                    <tr style="background: #d1fae5; font-weight: bold; font-size: 1.1em;">
+                        <td colspan="3"><strong>GAINS TOTAUX ANNUELS</strong></td>
+                        <td><strong>9,300,000 FCFA</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="stats-grid">
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--success), #059669);">
+                    <h3>Période de Retour</h3>
+                    <div class="stat-value">16</div>
+                    <div class="stat-label">Mois</div>
+                </div>
+                <div class="stat-card">
+                    <h3>ROI sur 3 ans</h3>
+                    <div class="stat-value">118%</div>
+                    <div class="stat-label">Bénéfice net</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--accent), #d97706);">
+                    <h3>Économies cumulées</h3>
+                    <div class="stat-value">15M</div>
+                    <div class="stat-label">FCFA en 2 ans</div>
+                </div>
+            </div>
+
+            <h2>Bénéfices Qualitatifs</h2>
+            <div class="plan-container">
+                <ul style="font-size: 1.1em;">
+                    <li><strong>Image de marque:</strong> Atelier professionnel et moderne valorise ESIG Global Success</li>
+                    <li><strong>Sécurité:</strong> Réduction drastique des risques d'accidents</li>
+                    <li><strong>Formation:</strong> Environnement optimal pour l'apprentissage des étudiants</li>
+                    <li><strong>Conformité:</strong> Respect des normes de sécurité et d'hygiène</li>
+                    <li><strong>Motivation:</strong> Personnel et étudiants plus motivés dans un environnement organisé</li>
+                    <li><strong>Traçabilité:</strong> Suivi précis de tous les équipements et opérations</li>
+                    <li><strong>Certification:</strong> Facilite l'obtention de certifications qualité (ISO 9001, etc.)</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>🎯 Conclusion:</strong> L'investissement de 12.8M FCFA sera amorti en moins de 16 mois
+                grâce aux gains de productivité et à la réduction des coûts opérationnels. Le retour sur investissement
+                est excellent avec des bénéfices durables sur le long terme.
+            </div>
+        </div>
+
+        <!-- RECOMMANDATIONS -->
+        <div class="content page-break">
+            <h1>✅ Recommandations et Prochaines Étapes</h1>
+
+            <h2>Actions Immédiates (Semaine 1)</h2>
+            <div class="plan-container">
+                <ol style="font-size: 1.1em; line-height: 2;">
+                    <li><strong>Validation budgétaire:</strong> Approbation du budget par la direction</li>
+                    <li><strong>Constitution de l'équipe projet:</strong> Désignation d'un chef de projet et des responsables</li>
+                    <li><strong>Lancement des appels d'offres:</strong> Contact avec 3-5 fournisseurs par catégorie</li>
+                    <li><strong>Planification détaillée:</strong> Établissement du calendrier précis avec jalons</li>
+                    <li><strong>Communication interne:</strong> Information de tout le personnel sur le projet</li>
+                </ol>
+            </div>
+
+            <h2>Critères de Sélection des Fournisseurs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Critère</th>
+                        <th>Pondération</th>
+                        <th>Détails</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Prix</strong></td>
+                        <td>35%</td>
+                        <td>Rapport qualité/prix, possibilités de remise</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Qualité produits</strong></td>
+                        <td>30%</td>
+                        <td>Certifications, durabilité, garanties</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Délai de livraison</strong></td>
+                        <td>20%</td>
+                        <td>Respect des délais, disponibilité stock</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service après-vente</strong></td>
+                        <td>10%</td>
+                        <td>Maintenance, pièces de rechange, support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Références</strong></td>
+                        <td>5%</td>
+                        <td>Expérience similaire, réputation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Fournisseurs Recommandés (Togo)</h2>
+            <div class="plan-container">
+                <h3>Mobilier et Équipements</h3>
+                <ul>
+                    <li><strong>SOREMAC Togo</strong> - Matériel industriel et mobilier atelier</li>
+                    <li><strong>CFAO Equipment</strong> - Équipements professionnels</li>
+                    <li><strong>Toguna</strong> - Mobilier métallique sur mesure</li>
+                </ul>
+
+                <h3>Sécurité et EPI</h3>
+                <ul>
+                    <li><strong>Protec Sécurité</strong> - EPI et équipements de sécurité</li>
+                    <li><strong>Cotogo</strong> - Équipements de protection industrielle</li>
+                </ul>
+
+                <h3>Outillage</h3>
+                <ul>
+                    <li><strong>SANDVIK Togo</strong> - Outils de coupe et instruments de précision</li>
+                    <li><strong>Quincaillerie du Port</strong> - Outillage manuel</li>
+                </ul>
+            </div>
+
+            <h2>Points de Vigilance</h2>
+            <div class="alert alert-warning">
+                <strong>⚠️ Attention particulière à porter sur:</strong>
+                <ul style="margin: 15px 0 0 20px;">
+                    <li>Vérification des dimensions réelles vs plans avant commande</li>
+                    <li>Test de charge des rayonnages avant mise en service</li>
+                    <li>Conformité des équipements de sécurité aux normes en vigueur</li>
+                    <li>Calibration obligatoire des instruments de mesure</li>
+                    <li>Formation complète du personnel avant utilisation</li>
+                    <li>Documentation exhaustive de tous les équipements</li>
+                </ul>
+            </div>
+
+            <h2>Indicateurs de Suivi du Projet</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>KPI</th>
+                        <th>Objectif</th>
+                        <th>Fréquence mesure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Respect des délais</td>
+                        <td>100%</td>
+                        <td>Hebdomadaire</td>
+                    </tr>
+                    <tr>
+                        <td>Respect du budget</td>
+                        <td>± 5%</td>
+                        <td>Hebdomadaire</td>
+                    </tr>
+                    <tr>
+                        <td>Qualité des installations</td>
+                        <td>>95%</td>
+                        <td>Par phase</td>
+                    </tr>
+                    <tr>
+                        <td>Satisfaction équipe</td>
+                        <td>>90%</td>
+                        <td>Fin de projet</td>
+                    </tr>
+                    <tr>
+                        <td>Taux de conformité sécurité</td>
+                        <td>100%</td>
+                        <td>Continue</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-success" style="margin-top: 30px;">
+                <strong>🎯 Vision à Long Terme:</strong><br>
+                Ce projet constitue la première pierre d'une transformation complète de l'atelier ESIG Global Success.
+                Il ouvre la voie vers l'Atelier 4.0 avec digitalisation complète, IoT, et optimisation continue
+                des processus. L'investissement d'aujourd'hui garantit la compétitivité de demain.
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div style="font-size: 2.5em; margin-bottom: 20px;">🏆</div>
+            <h2 style="color: white; border: none; margin-bottom: 15px;">ESIG GLOBAL SUCCESS</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px;">École Supérieure d'Ingénierie et de Gestion</p>
+
+            <div style="border-top: 2px solid rgba(255,255,255,0.3); padding-top: 25px; margin-top: 25px;">
+                <p><strong>Document:</strong> Plan Budgétaire et Organisationnel - Atelier de Production</p>
+                <p><strong>Version:</strong> 1.0 | <strong>Date:</strong> Décembre 2025</p>
+                <p><strong>Établi par:</strong> Service Maintenance et Gestion</p>
+                <p><strong>Validé par:</strong> Direction Technique ESIG Global Success</p>
+            </div>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid rgba(255,255,255,0.3);">
+                <p>📞 Contact: +228 XX XX XX XX</p>
+                <p>📧 Email: atelier@esig-globalsuccess.tg</p>
+                <p style="margin-top: 15px;">© 2025 ESIG Global Success - Tous droits réservés</p>
+                <p style="font-size: 0.9em; opacity: 0.8;">Document confidentiel - Usage interne uniquement</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-print no-print" onclick="window.print()">
+        🖨️ Imprimer / Générer PDF
+    </button>
+
+    <script>
+        // Animation au scroll
+        window.addEventListener('scroll', function() {
+            const elements = document.querySelectorAll('.timeline-item');
+            elements.forEach(el => {
+                const position = el.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if(position < screenPosition) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateX(0)';
+                }
+            });
+        });
+
+        // Style initial pour l'animation
+        document.querySelectorAll('.timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(-50px)';
+            el.style.transition = 'all 0.6s ease-out';
+        });
+    </script>
+</body>
+</html>
